@@ -1,6 +1,8 @@
 import clients.OrderClient;
+import io.qameta.allure.Description;
 import models.Order;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -20,6 +22,8 @@ public class OrderCreateTest {
 
     @ParameterizedTest
     @MethodSource("colorData")
+    @DisplayName("Заказ можно создать с разными вариантами цвета")
+    @Description("Создание заказа с одним цветом, двумя цветами и без цвета: код 201 и тело содержит track")
     public void orderCanBeCreatedWithDifferentColors(String[] color) {
         Order order = new Order(
                 "Иван", "Иванов", "Москва, Тверская 1", "Сокольники",

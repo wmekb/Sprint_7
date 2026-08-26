@@ -1,7 +1,9 @@
 import clients.CourierClient;
+import io.qameta.allure.Description;
 import models.Courier;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -21,6 +23,8 @@ public class CourierCreateTest {
     }
 
     @Test
+    @DisplayName("Курьер может быть создан")
+    @Description("Проверка успешного создания курьера: код 201 и тело ok:true")
     public void courierCanBeCreated() {
         Courier courier = new Courier(login, password, firstName);
         courierClient.create(courier)
@@ -31,6 +35,8 @@ public class CourierCreateTest {
     }
 
     @Test
+    @DisplayName("Нельзя создать двух одинаковых курьеров")
+    @Description("Повторное создание курьера с тем же логином возвращает ошибку 409")
     public void createDuplicateCourierReturnsError() {
         Courier courier = new Courier(login, password, firstName);
         courierClient.create(courier).assertThat().statusCode(201);
@@ -42,8 +48,10 @@ public class CourierCreateTest {
     }
 
     @Test
+    @DisplayName("Нельзя создать курьера без обязательного поля")
+    @Description("Создание курьера без пароля возвращает ошибку 400")
     public void createCourierWithoutRequiredFieldReturnsError() {
-        Courier courier = new Courier(login, null, firstName);
+        Courier courier = new Courier(login, "", firstName);
         courierClient.create(courier)
                 .assertThat()
                 .statusCode(400)
